@@ -1,0 +1,23 @@
+.footer-container {
+      position:absolute;      
+  top: 100%;
+  left: 0;
+  width: 100%;          
+ 
+ 
+  background: linear-gradient(to right, #1e1e2f, #2a2a3d);
+  color: #fff;
+  text-align: center;
+  padding: 25px 0;
+  font-family: "Comic Sans MS", cursive;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+
+  box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+
+.footer-text {
+  margin: 0;
+}

@@ -1,0 +1,37 @@
+
+.bg-looney {
+  background: linear-gradient(90deg, #ffcc00, #ff6f00);
+}
+
+nav.navbar {
+  position: fixed;       /* Fija la navbar en el top */
+  top: 0;
+  left: 0;
+  width: 100%;          /* Que ocupe todo el ancho */
+  z-index: 1030;        /* Por encima de la mayoría de elementos */
+}
+
+.cartoon-title {
+  font-family: "Comic Sans MS", cursive;
+  font-size: 28px;
+  color: #fff !important;
+  text-shadow: 2px 2px #000;
+}
+
+.navbar-nav .nav-link {
+  font-family: "Comic Sans MS", cursive;
+  font-size: 16px;
+  color: #fff !important;
+  transition: transform 0.2s, color 0.3s;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.navbar-nav .nav-link:hover {
+  transform: scale(1.1);
+  color: #ffd700 !important;
+}
+
+
+body {
+  padding-top: 50px; 
+}
