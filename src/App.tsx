@@ -6,7 +6,6 @@ import Footer from "./Footer/footer";
 import PatoLucas from './ThreeModel/PatoLucas'
 import LolaBunny from './LolaBunnyModel/Lola'
 import BugsBunny from './BugsModel/Bugs'
-
 function App() {
   return (
     <>
