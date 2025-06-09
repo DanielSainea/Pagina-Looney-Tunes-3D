@@ -1,0 +1,19 @@
+.glass-box {
+  background: rgba(40, 168, 247, 0.7); 
+  backdrop-filter: blur(5px); /* efecto */
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  border-radius: 20px;
+  padding: 60px;
+  color: white;
+  text-align: center;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 2vh;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+h1 {
+  font-weight: bold;
+  size: 300px;
+}
