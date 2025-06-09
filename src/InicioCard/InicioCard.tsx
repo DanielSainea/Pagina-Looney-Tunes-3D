@@ -1,3 +1,4 @@
+import './InicioCard.css';
 const InicioCard = () => {
 return (
         <div className="container">
@@ -12,6 +13,10 @@ return (
                     correcta para los Looney Tunes.
                   </p>
                 </ul>
+                <p>Librerias Usadas</p>
+                  <p>three.js</p>
+                  <p>Motion.dev</p>
+                  <p>react-particles-js</p>
             </div>
         </div>
         );
