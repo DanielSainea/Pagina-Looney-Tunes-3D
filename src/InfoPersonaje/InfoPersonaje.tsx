@@ -1,3 +1,5 @@
+import "./InfoPersonaje.css"; 
+
 const InfoPersonaje = () => {
   return (
     <div className="character-card-fixed">

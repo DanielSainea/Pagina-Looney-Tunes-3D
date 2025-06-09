@@ -3,7 +3,6 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import InfoPersonaje from "../InfoPersonaje/InfoPersonaje";
-import "../InfoPersonaje/InfoPersonaje.css";
 
 
 const Model = () => {
@@ -226,9 +225,6 @@ angleAttr.needsUpdate = true;
         }}
       />
 
-  
-
-
 
       {/* Botones de audio */}
       <div
@@ -290,7 +286,7 @@ angleAttr.needsUpdate = true;
 </div>
 
 
-  <InfoPersonaje />
+  <InfoPersonaje/>
     </div>
   );
 };
