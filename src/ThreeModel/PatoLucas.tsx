@@ -3,7 +3,6 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import InfoPersonaje from "../InfoPersonaje/InfoPersonaje";
-import "../InfoPersonaje/InfoPersonaje.css";
 
 
 const Model = () => {
@@ -323,6 +322,7 @@ animate();
           display: "flex",
           gap: "10px",
         }}
+<<<<<<< HEAD
       >
         <button onClick={handlePlaySound} disabled={isPlaying}>
           ▶️ Play
@@ -332,6 +332,72 @@ animate();
         </button>
       </div>
         <InfoPersonaje />
+=======
+      />
+
+
+      {/* Botones de audio */}
+      <div
+  style={{
+    position: "absolute",
+    top: "20px",
+    left: "20px",
+    zIndex: 10,
+    display: "flex",
+    gap: "12px",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    padding: "10px 14px",
+    borderRadius: "10px",
+    border: "2px solid #fff",
+    backdropFilter: "blur(6px)",
+  }}
+>
+  <button
+    onClick={handlePlaySound}
+    disabled={isPlaying}
+    style={{
+      padding: "8px 16px",
+      borderRadius: "8px",
+      border: "2px solid #222",
+      backgroundColor: isPlaying ? "#ccc" : "#ffcf33",
+      color: "#000",
+      fontFamily: '"Comic Sans MS", "cursive"',
+      fontSize: "16px",
+      cursor: isPlaying ? "not-allowed" : "pointer",
+      transition: "transform 0.2s",
+      boxShadow: "2px 2px 4px rgba(0,0,0,0.4)",
+    }}
+    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+  >
+    ▶️ Play
+  </button>
+
+  <button
+    onClick={handlePauseSound}
+    disabled={!isPlaying}
+    style={{
+      padding: "8px 16px",
+      borderRadius: "8px",
+      border: "2px solid #222",
+      backgroundColor: !isPlaying ? "#ccc" : "#66d9ef",
+      color: "#000",
+      fontFamily: '"Comic Sans MS", "cursive"',
+      fontSize: "16px",
+      cursor: !isPlaying ? "not-allowed" : "pointer",
+      transition: "transform 0.2s",
+      boxShadow: "2px 2px 4px rgba(0,0,0,0.4)",
+    }}
+    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+  >
+    ⏸️ Pause
+  </button>
+</div>
+
+
+  <InfoPersonaje/>
+>>>>>>> f4d5796123d265e1cee59eb8b0b5647a93ccf3da
     </div>
   );
 };
