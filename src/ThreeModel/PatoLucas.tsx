@@ -188,7 +188,8 @@ angleAttr.needsUpdate = true;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     }
-
+    
+    // Cleanup
     return () => {
       renderer.dispose();
       window.removeEventListener("resize", onWindowResize);
@@ -196,6 +197,7 @@ angleAttr.needsUpdate = true;
     };
   }, []);
 
+ // Handlers
   const handlePlaySound = () => {
     if (soundRef && !soundRef.isPlaying) {
       soundRef.play();

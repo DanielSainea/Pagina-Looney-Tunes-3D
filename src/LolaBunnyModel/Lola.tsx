@@ -5,22 +5,15 @@ import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 const Model = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
-  const labelRef = useRef<HTMLDivElement | null>(null);
-    const labelRef2 = useRef<HTMLDivElement | null>(null)
   const [soundRef, setSoundRef] = useState<THREE.Audio | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (!mountRef.current) return;
 
+    // Escena, cámara, renderer
     const scene = new THREE.Scene();
-
-const fondito = new THREE.TextureLoader();
-fondito.load('/planetas.jpg', (texture) => {
-    scene.background = texture;
-  });
-
-scene.fog = new THREE.Fog(0x0d0d2b, 10, 40);
+    //scene.background = new THREE.Color(0xeeeeee); //Color de fondo
 
     const camera = new THREE.PerspectiveCamera(
       60,
@@ -28,35 +21,169 @@ scene.fog = new THREE.Fog(0x0d0d2b, 10, 40);
       0.1,
       1000
     );
-    camera.position.set(0, 5, 3);
+    camera.position.set(0, 0.5, 4);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    directionalLight.position.set(2, 9, 5);
+    // Luz 1 abajo
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+    directionalLight.position.set(0, -5, 2);
     scene.add(directionalLight);
 
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.minDistance = 3; // Mínimo alejado de la cámara al objeto
-    controls.maxDistance = 5; // Máximo acercamiento
-    controls.minAzimuthAngle = -Math.PI / 3; 
-    controls.maxAzimuthAngle = Math.PI / 2; 
+    // Luz 2 izquierda
+    const directionalLight2 = new THREE.DirectionalLight(0x9c00bb, 3);
+    directionalLight2.position.set(-3, 2, -1);
+    scene.add(directionalLight2);
+
+    // Luz 3 derecha
+    const directionalLight3 = new THREE.DirectionalLight(0xff1f00, 3);
+    directionalLight3.position.set(3, 2, -1);
+    scene.add(directionalLight3);
+
+    //Base Modelo
+    const baseModelo = new THREE.Mesh(
+    new THREE.CylinderGeometry (0.75, 0.75, 0.1, 20)
+    );
+    baseModelo.position.y = -1.1;
+    scene.add(baseModelo);
+
+    //Cristal
+    const cristal = new THREE.Mesh(
+    new THREE.CylinderGeometry (0.8, 0.8, 2, 20),
+    new THREE.MeshPhongMaterial({
+      color:0xb5b5b5,
+      opacity: 0.2,
+      transparent: true,
+      })
+    );
+    cristal.position.y = -0.15;
+    scene.add(cristal);
+
+    // Cargar textura
+    const textureLoader = new THREE.TextureLoader();
+    const floorTexture = textureLoader.load('piso_madera.jpg');
+    const techoTextura = textureLoader.load('techo.png');
+    const Pared1Textura = textureLoader.load('pared1.png');
+    const Pared2Textura = textureLoader.load('pared2.png');
+    const Pared3Textura = textureLoader.load('pared3.png');
+    const Pared4Textura = textureLoader.load('pared4.png');
+
+    // Repetir y ajustar si es necesario
+    techoTextura.wrapS = techoTextura.wrapT = THREE.RepeatWrapping;
+    techoTextura.repeat.set(2, 2); 
+
+    // Crear material con la textura
+    const floorMaterial = new THREE.MeshBasicMaterial({
+      map: floorTexture,
+      color: 0x7c7c7c, //oscurece la textura
+    });
+
+    const techoMaterial = new THREE.MeshBasicMaterial({
+      map: techoTextura,
+      color: 0x7c7c7c, //oscurece la textura
+    });
+
+    const Pared1Material = new THREE.MeshBasicMaterial({
+      map: Pared1Textura,
+      color: 0x7c7c7c, //oscurece la textura
+    });
+
+     const Pared2Material = new THREE.MeshBasicMaterial({
+      map: Pared2Textura,
+      color: 0x7c7c7c, //oscurece la textura
+    });
+
+    const Pared3Material = new THREE.MeshBasicMaterial({
+      map: Pared3Textura,
+      color: 0x7c7c7c, //oscurece la textura
+    });
+
+    const Pared4Material = new THREE.MeshBasicMaterial({
+      map: Pared4Textura,
+      color: 0x7c7c7c, //oscurece la textura
+    });
+
+
 
     
+    // piso
+    const floor = new THREE.Mesh(
+      new THREE.BoxGeometry(8, 0.01, 8),
+      floorMaterial,
+    );
+    floor.position.y = -1.2;
+    scene.add(floor);
+
+    // Techo
+    const techo = new THREE.Mesh(
+      new THREE.BoxGeometry(8, 0.01, 8),
+      techoMaterial,
+    );
+    techo.position.y = 2.8;
+    scene.add(techo);
+
+    // Pared 1
+    const pared1 = new THREE.Mesh(
+      new THREE.BoxGeometry(0.01, 4, 8),
+      Pared1Material
+    );
+    pared1.position.x = 4;
+    pared1.position.y = 0.8;
+    scene.add(pared1);
+
+    // Pared 2
+    const pared2 = new THREE.Mesh(
+      new THREE.BoxGeometry(0.01, 4, 8),
+      Pared2Material
+    );
+    pared2.position.x = -4;
+    pared2.position.y = 0.8;
+    scene.add(pared2);
+
+    // Pared 3
+    const pared3 = new THREE.Mesh(
+      new THREE.BoxGeometry(8, 4, 0.01),
+      Pared3Material
+    );
+    pared3.position.z = 4;
+    pared3.position.y = 0.8;
+    scene.add(pared3);
+
+    // Pared 4
+    const pared4 = new THREE.Mesh(
+      new THREE.BoxGeometry(8, 4, 0.01),
+      Pared4Material
+    );
+    pared4.position.z = -4;
+    pared4.position.y = 0.8;
+    scene.add(pared4);
+
+    // OrbitControls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    controls.minPolarAngle = Math.PI / 3.9; //Rotacion arriba
+    controls.maxPolarAngle = Math.PI / 1.8; //Rotacion abajo
+
+    controls.minDistance = 2; // Mínimo alejado de la cámara al objeto
+    controls.maxDistance = 4; // Máximo acercamiento
+    
+    controls.enablePan = false; //Limitar paneo (desactivado)
+    
+    // create an AudioListener and add it to the camera
     const listener = new THREE.AudioListener();
     camera.add(listener);
 
+    // create a global audio source
     const sound = new THREE.Audio(listener);
+
+    // Cargar cancion
     const audioLoader = new THREE.AudioLoader();
     audioLoader.load(
       "/Looney-Tunes-en-Latino-Día-del-presidente_-con-Lola-Bunny-WB-Kids.ogg",
-      (buffer) => {
+      function (buffer) {
         sound.setBuffer(buffer);
         sound.setLoop(true);
         sound.setVolume(0.5);
@@ -64,146 +191,77 @@ scene.fog = new THREE.Fog(0x0d0d2b, 10, 40);
       }
     );
 
-
-
-
-
-
-    const modelGroup = new THREE.Group(); // contenedor del modelo
-    scene.add(modelGroup);
-
-    const targetPosition = new THREE.Vector3(); // punto que seguirá la etiqueta
-
+    // Cargar modelo GLB/GLTF
     const loader = new GLTFLoader();
     loader.load(
-      "/lola_bunny.glb",
+      "/lola_bunny.glb", // asegúrate de que la ruta sea correcta
       (gltf) => {
         const model = gltf.scene;
-        model.scale.set(1, 1, 1);
-        modelGroup.add(model);
-
-          // Piso
-    const floor = new THREE.Mesh(
-      new THREE.BoxGeometry(5, 1, 5),
-      new THREE.MeshStandardMaterial({ color: 0x444444 })
-    );
-    floor.position.y = 0.6;
-    scene.add(floor);
-
-        // Establece un punto como "cabeza" del modelo (ajústalo si no queda bien)
-        model.updateWorldMatrix(true, true);
-        const box = new THREE.Box3().setFromObject(model);
-        const center = new THREE.Vector3();
-        box.getCenter(center);
-        center.y += 1; // eleva la etiqueta para que aparezca encima
-        targetPosition.copy(center);
-
-
+        model.scale.set(30, 30, 30);
+        model.position.y = -1;
+        scene.add(model);
       },
-
-
       undefined,
       (error) => {
         console.error("Error al cargar modelo:", error);
       }
     );
 
+    
      // PARTICULAS flotantes
-const particleCount = 220;
-const particlesGeometry = new THREE.BufferGeometry();
-const positions = new Float32Array(particleCount * 3);
-const angles = new Float32Array(particleCount); // nuevo: ángulo para movimiento
+    const particleCount = 300;
+    const particlesGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
 
-for (let i = 0; i < particleCount; i++) {
-  const i3 = i * 3;
-  positions[i3] = (Math.random() - 0.5) * 20;
-  positions[i3 + 1] = (Math.random() - 0.5) * 10;
-  positions[i3 + 2] = (Math.random() - 0.5) * 20;
-  angles[i] = Math.random() * Math.PI * 2;
-}
+    for (let i = 0; i < particleCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 10; // rango -10 a 10
+    }
 
-particlesGeometry.setAttribute(
-  "position",
-  new THREE.BufferAttribute(positions, 3)
-);
-particlesGeometry.setAttribute(
-  "angle",
-  new THREE.Float32BufferAttribute(angles, 1)
-);
+    particlesGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(positions, 3)
+    );
 
-const particlesMaterial = new THREE.PointsMaterial({
-  color: 0xff9300,
-  size: 0.1,
-  transparent: true,
-  opacity: 0.8,
-  depthWrite: false,
-  blending: THREE.AdditiveBlending,
-});
+    const particlesMaterial = new THREE.PointsMaterial({
+      color: 0xff8b00,
+      size: 0.1,
+      transparent: true,
+      opacity: 0.7,
+    });
 
-const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-scene.add(particles);
+    const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particles);
 
-
+    // Animación
     const animate = () => {
       requestAnimationFrame(animate);
       controls.update();
 
-       // Partículas flotando (simple movimiento)
-     const posAttr = particles.geometry.getAttribute("position");
-const angleAttr = particles.geometry.getAttribute("angle");
-
-for (let i = 0; i < particleCount; i++) {
-  const angle = angleAttr.getX(i) + 0.01; // incrementamos el ángulo
-
-  posAttr.setX(i, posAttr.getX(i) + Math.cos(angle) * 0.04); // movimiento circular
-  posAttr.setY(i, posAttr.getY(i) + Math.sin(angle * 0.5) * 0.01); // leve flotación
-
-  angleAttr.setX(i, angle); // actualizamos ángulo
-}
-
-posAttr.needsUpdate = true;
-angleAttr.needsUpdate = true;
+      // Partículas flotando (simple movimiento)
+      const pos = particles.geometry.attributes
+        .position as THREE.BufferAttribute;
+      for (let i = 1; i < pos.count; i += 3) {
+        pos.array[i] += 0.002; // eje Y
+        if (pos.array[i] > 10) pos.array[i] = -10;
+      }
+      pos.needsUpdate = true;
 
       renderer.render(scene, camera);
-
-   if (labelRef.current && targetPosition) {
-  const screenPos = targetPosition.clone().project(camera);
-
-  const x = (screenPos.x * 0.5 + 0.5) * window.innerWidth;
-  const y = (1 - (screenPos.y * 0.5 + 0.5)) * window.innerHeight;
-
-  // Nombre (arriba del personaje)
-  labelRef.current.style.transform = `translate(-50%, 20%) translate(${x}px, ${y}px)`;
-
-  // Descripción (a la derecha del personaje)
-  if (labelRef2.current) {
-    const offsetX = 400; // píxeles a la derecha
-    const offsetY = 100; // puedes ajustar si quieres moverlo verticalmente
-
-    labelRef2.current.style.transform = `translate(-50%, -30%) translate(${x + offsetX}px, ${y + offsetY}px)`;
-  }
-}
-
     };
-
-       
 
     animate();
 
-    window.addEventListener("resize", onWindowResize);
-    function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
 
+    // Cleanup
     return () => {
       renderer.dispose();
-      window.removeEventListener("resize", onWindowResize);
       mountRef.current?.removeChild(renderer.domElement);
     };
   }, []);
 
+
+
+ // Handlers
   const handlePlaySound = () => {
     if (soundRef && !soundRef.isPlaying) {
       soundRef.play();
@@ -219,124 +277,24 @@ angleAttr.needsUpdate = true;
   };
 
   return (
-    <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
-      {/* Canvas 3D */}
+    <div>
+      <div ref={mountRef} style={{ width: "100vw", height: "100vh" }} />;
       <div
-        ref={mountRef}
         style={{
-          width: "100%",
-          height: "100%",
           position: "absolute",
-          top: 0,
-          left: 0,
+          top: 60,
+          left: 20,
+          display: "flex",
+          gap: "10px",
         }}
-      />
-
-   {/* Etiqueta flotante */}
-<div
-  ref={labelRef}
-  style={{
-    position: "absolute",
-    color: "white",
-    background: "rgba(0, 0, 0, 0.7)",
-    padding: "6px 12px",
-    borderRadius: "8px",
-    fontSize: "16px",
-    zIndex: 10,
-    pointerEvents: "none",
-    whiteSpace: "nowrap",
-    fontFamily: '"Comic Sans MS", "cursive"',
-    letterSpacing: "0.5px",
-    textShadow: "1px 1px 2px black",
-    border: "2px solid white",
-  }}
->
-  Lola Bunn
-</div>
-
-<div  
-  ref={labelRef2}
-  style={{
-    position: "absolute",
-    color: "white",
-    background: "rgba(0, 0, 0, 0.6)",
-    padding: "8px 14px",
-    borderRadius: "10px",
-    fontSize: "14px",
-    zIndex: 9,
-    pointerEvents: "none",
-    maxWidth: "300px",
-    lineHeight: "1.6",
-    fontFamily: '"Comic Sans MS", "cursive"',
-    letterSpacing: "0.3px",
-    textShadow: "1px 1px 2px black",
-    border: "1.5px solid white",
-  }}
->
-  Lola Bunny es un personaje del universo Looney Tunes, conocida por su habilidad en el baloncesto. Apareció por primera vez en Space Jam (1996) como una jugadora ágil, precisa y segura de sí misma, destacando en el equipo Tune Squad junto a Bugs Bunny. Es rápida, competitiva y con gran destreza en la cancha. En Space Jam: A New Legacy (2021), su diseño fue actualizado para enfocarse más en su rol deportivo y de liderazgo, resaltando su talento y trabajo en equipo.
-
-</div>
-
-
-
-      {/* Botones de audio */}
-      <div
-  style={{
-    position: "absolute",
-    top: "20px",
-    left: "20px",
-    zIndex: 10,
-    display: "flex",
-    gap: "12px",
-    backgroundColor: "rgba(255, 255, 255, 0.4)",
-    padding: "10px 14px",
-    borderRadius: "10px",
-    border: "2px solid #fff",
-    backdropFilter: "blur(6px)",
-  }}
->
-  <button
-    onClick={handlePlaySound}
-    disabled={isPlaying}
-    style={{
-      padding: "8px 16px",
-      borderRadius: "8px",
-      border: "2px solid #222",
-      backgroundColor: isPlaying ? "#ccc" : "#ffcf33",
-      color: "#000",
-      fontFamily: '"Comic Sans MS", "cursive"',
-      fontSize: "16px",
-      cursor: isPlaying ? "not-allowed" : "pointer",
-      transition: "transform 0.2s",
-      boxShadow: "2px 2px 4px rgba(0,0,0,0.4)",
-    }}
-    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-  >
-    ▶️ Play
-  </button>
-
-  <button
-    onClick={handlePauseSound}
-    disabled={!isPlaying}
-    style={{
-      padding: "8px 16px",
-      borderRadius: "8px",
-      border: "2px solid #222",
-      backgroundColor: !isPlaying ? "#ccc" : "#66d9ef",
-      color: "#000",
-      fontFamily: '"Comic Sans MS", "cursive"',
-      fontSize: "16px",
-      cursor: !isPlaying ? "not-allowed" : "pointer",
-      transition: "transform 0.2s",
-      boxShadow: "2px 2px 4px rgba(0,0,0,0.4)",
-    }}
-    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-  >
-    ⏸️ Pause
-  </button>
-</div>
+      >
+        <button onClick={handlePlaySound} disabled={isPlaying}>
+          ▶️ Play
+        </button>
+        <button onClick={handlePauseSound} disabled={!isPlaying}>
+          ⏸️ Pause
+        </button>
+      </div>
     </div>
   );
 };
