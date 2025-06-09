@@ -12,12 +12,15 @@ function App() {
     <>
       <Router>
         <Navbar />
+        
         <Routes>
           <Route path="/ThreeModel" element={<PatoLucas />} />
           <Route path="/LolaBunnyModel" element={<LolaBunny />} />
           <Route path="/BugsModel" element={<BugsBunny />} />
+          
          
         </Routes>
+
         <Footer />
       </Router>
 

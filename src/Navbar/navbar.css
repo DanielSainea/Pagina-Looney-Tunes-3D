@@ -4,11 +4,11 @@
 }
 
 nav.navbar {
-  position: fixed;       /* Fija la navbar en el top */
+  position: fixed;       
   top: 0;
   left: 0;
-  width: 100%;          /* Que ocupe todo el ancho */
-  z-index: 1030;        /* Por encima de la mayoría de elementos */
+  width: 100%;         
+  z-index: 1030;        
 }
 
 .cartoon-title {

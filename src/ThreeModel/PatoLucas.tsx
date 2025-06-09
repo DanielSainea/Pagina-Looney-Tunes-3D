@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import InfoPersonaje from "../InfoPersonaje/InfoPersonaje";
+import "../InfoPersonaje/InfoPersonaje.css";
+
 
 const Model = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -161,13 +164,13 @@ angleAttr.needsUpdate = true;
   const x = (screenPos.x * 0.5 + 0.5) * window.innerWidth;
   const y = (1 - (screenPos.y * 0.5 + 0.5)) * window.innerHeight;
 
-  // Nombre (arriba del personaje)
+  // Nombre 
   labelRef.current.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`;
 
-  // Descripción (a la derecha del personaje)
+  // Descripción 
   if (labelRef2.current) {
-    const offsetX = 400; // píxeles a la derecha
-    const offsetY = 100; // puedes ajustar si quieres moverlo verticalmente
+    const offsetX = 400; 
+    const offsetY = 100; 
 
     labelRef2.current.style.transform = `translate(-50%, -50%) translate(${x + offsetX}px, ${y + offsetY}px)`;
   }
@@ -221,51 +224,7 @@ angleAttr.needsUpdate = true;
         }}
       />
 
-   {/* Etiqueta flotante */}
-<div
-  ref={labelRef}
-  style={{
-    position: "absolute",
-    color: "white",
-    background: "rgba(0, 0, 0, 0.7)",
-    padding: "6px 12px",
-    borderRadius: "8px",
-    fontSize: "16px",
-    zIndex: 10,
-    pointerEvents: "none",
-    whiteSpace: "nowrap",
-    fontFamily: '"Comic Sans MS", "cursive"',
-    letterSpacing: "0.5px",
-    textShadow: "1px 1px 2px black",
-    border: "2px solid white",
-  }}
->
-  Pato Lucas
-</div>
-
-<div  
-  ref={labelRef2}
-  style={{
-    position: "absolute",
-    color: "white",
-    background: "rgba(0, 0, 0, 0.6)",
-    padding: "8px 14px",
-    borderRadius: "10px",
-    fontSize: "14px",
-    zIndex: 9,
-    pointerEvents: "none",
-    maxWidth: "300px",
-    lineHeight: "1.6",
-    fontFamily: '"Comic Sans MS", "cursive"',
-    letterSpacing: "0.3px",
-    textShadow: "1px 1px 2px black",
-    border: "1.5px solid white",
-  }}
->
-  El Pato Lucas es un personaje clásico de Looney Tunes, conocido por ser egocéntrico, caótico y exagerado. Siempre busca protagonismo, aunque sus planes suelen salir mal.
-  <br /><br />
-  En su versión espacial, Lucas mantiene su actitud dramática, pero ahora con traje futurista y aventuras intergalácticas llenas de torpeza y humor cósmico.
-</div>
+  
 
 
 
@@ -327,6 +286,9 @@ angleAttr.needsUpdate = true;
     ⏸️ Pause
   </button>
 </div>
+
+
+  <InfoPersonaje />
     </div>
   );
 };

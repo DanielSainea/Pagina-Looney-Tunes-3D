@@ -1,0 +1,74 @@
+.character-card-fixed {
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  z-index: 10;
+  max-width: 360px;
+  width: 100%;
+  backdrop-filter: blur(4px);
+}
+
+.looney-card {
+  background: linear-gradient(135deg, #2b1055cc, #7597decc);
+  border-radius: 20px;
+  border: 3px solid #ffe600;
+  box-shadow:
+    0 0 12px #ffe60088,
+    0 0 24px #ffe60055,
+    0 10px 25px rgba(0, 0, 0, 0.6);
+  font-family: 'Comic Sans MS', cursive;
+  animation: fadeIn 0.6s ease-in-out, neonPulse 2s infinite alternate;
+  backdrop-filter: blur(10px);
+}
+
+.looney-card .card-title {
+  color: #ffe600;
+  font-size: 1.9rem;
+  text-shadow:
+    0 0 3px #000,
+    0 0 6px #ffe600;
+  animation: titleGlow 3s infinite alternate;
+}
+
+.looney-card .card-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #fdfdfd;
+  text-shadow: 1px 1px 2px #111;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes neonPulse {
+  from {
+    box-shadow:
+      0 0 12px #ffe600aa,
+      0 0 24px #ffe60066,
+      0 10px 25px rgba(0, 0, 0, 0.6);
+  }
+  to {
+    box-shadow:
+      0 0 18px #ffe600dd,
+      0 0 36px #ffe600aa,
+      0 15px 30px rgba(0, 0, 0, 0.7);
+  }
+}
+
+@keyframes titleGlow {
+  0% {
+    text-shadow: 0 0 6px #ffe600;
+  }
+  100% {
+    text-shadow: 0 0 12px #fff700, 0 0 18px #ffe600;
+  }
+}
